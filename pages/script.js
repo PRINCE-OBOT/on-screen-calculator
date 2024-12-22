@@ -4,8 +4,8 @@ const digitOperatorContainer = document.querySelector(
 const inp = document.querySelector("input");
 
 //Stores each math element user click from the calculation
-//Setting the stop key to true stop the firstNum from appending digit when the summarize value is use for another expression 
-let storeMathElement = { stop : false};
+//Setting the stop key to true stop the firstNum from appending digit when the summarize value is use for another expression
+let storeMathElement = { stop: false};
 
 function add(num1, num2) {
   let result = num1 + num2;
@@ -32,34 +32,52 @@ digitOperatorContainer.addEventListener("click", (e) => {
   let splitDigit = "0123456789".split("");
   let splitOperators = "+-*/".split("");
 
-  // Checks if operator exist in the saveDigit object adding the secondNum in the saveDigit oject && accepts only digits.
+  // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
   if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
     if (!storeMathElement["secondNum"]) inp.value = "";
     inp.value += mathElement;
+    //Add the secondNum if the operator exist in the storeMathElement object
     storeMathElement["secondNum"] = inp.value;
     //Accepts only digit
   } else if (splitDigit.includes(mathElement)) {
-    //Stop the summarize value to be appended to a number
-      if(storeMathElement.stop){
-        if(splitDigit.includes(mathElement)){
-          inp.value = ""
-          storeMathElement.stop = false
-        }
+    //Stops the summarize value to be appended to a number
+    if (storeMathElement.stop) {
+      if (splitDigit.includes(mathElement)) {
+        inp.value = "";
+        storeMathElement.stop = false;
       }
+    }
     inp.value += mathElement;
+    // Add the firstNum
     storeMathElement["firstNum"] = inp.value;
-    //Checks if the firstNum is provided before it is been added to the saveDigit object.
-  } else if (storeMathElement["firstNum"] && splitOperators.includes(mathElement)) {
+  } else if (
+    storeMathElement["firstNum"] &&
+    storeMathElement["secondNum"] &&
+    splitOperators.includes(mathElement)
+  ) {
+    operate(
+      storeMathElement.operator,
+      +storeMathElement.firstNum,
+      +storeMathElement.secondNum
+    );
     storeMathElement["operator"] = mathElement;
-    //Passes the values inside the saveDigit object as argument.
+  }
+  //Checks if the firstNum exist in the storeMathElement object before the operator is been added to the storeMathElement object.
+  else if (
+    storeMathElement["firstNum"] &&
+    splitOperators.includes(mathElement)
+  ) {
+    //Add the operator if the firstNum exist in the storeMathElement object
+    storeMathElement["operator"] = mathElement;
+    //Passes the values inside the storeMathElement as argument to operate().
   } else if (mathElement === "=" && storeMathElement["secondNum"]) {
     operate(
       storeMathElement.operator,
       +storeMathElement.firstNum,
       +storeMathElement.secondNum
     );
-    //Clears the input screen and saveObject keys
+    //Clears the input screen and storeMathElement object
   } else if (mathElement === "AC") {
     inp.value = "";
     for (let key in storeMathElement) {
@@ -74,10 +92,10 @@ function operate(operator, num1, num2) {
   else if (operator === "*") inp.value = mul(num1, num2);
   else if (operator === "/") inp.value = div(num1, num2).toFixed(2);
 
-  let updateFirstNum = inp.value
+  let updateFirstNum = inp.value;
   for (let key in storeMathElement) {
     if (key === "firstNum") storeMathElement[key] = updateFirstNum;
-    else if(key === "stop") storeMathElement[key] = true
+    else if (key === "stop") storeMathElement[key] = true;
     else {
       delete storeMathElement[key];
     }

@@ -13,6 +13,8 @@
     
     --fw-bold : 900;
 
+    --fs-big : 2.5rem;
+
     --mx-width : 16rem;
 
     --br-small : .2rem;
@@ -49,6 +51,8 @@ input{
     border: none;
     border-radius: var(--br-small);
     background: var(--cl-light-grey);
+    font-size: var(--fs-big);
+    text-align: right;
 }
 .digit-operator-container{
     display: flex;
@@ -66,6 +70,9 @@ input{
     align-items: center;
     font-weight: var(--fw-bold);
     color: var(--cl-white);
+}
+.digit-operator-container div:hover{
+    cursor: pointer;
 }
 .digit-operator-container div:active{
     opacity:0.8;
