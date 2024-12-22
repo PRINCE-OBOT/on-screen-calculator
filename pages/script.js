@@ -2,7 +2,7 @@ const digitOperatorContainer = document.querySelector(".digit-operator-container
 const inp = document.querySelector("input")
 
 
-const saveDigit = {}
+let saveDigit = {}
 function add(num1, num2){
     let result  = num1 + num2
     return result
@@ -47,14 +47,20 @@ digitOperatorContainer.addEventListener("click", (e)=>{
     //Passes the values inside the saveDigit object as argument. 
   } else if (clickedDigit === "=") {
     operate(saveDigit.operator, saveDigit.firstNum, saveDigit.secondNum);
+  } else if(clickedDigit === 'AC'){
+    inp.value = ""
+        for(let key in saveDigit){
+            delete saveDigit[key]
+        }
   }
+   
 })
 
 function operate(operator, num1, num2){
-    if(operator === '+')console.log(add(num1, num2))
-    else if(operator === '-')console.log(sub(num1, num2))
-    else if(operator === '*')console.log(mul(num1, num2))
-    else if(operator === '/')console.log(div(num1, num2))
+    if(operator === '+')inp.value = add(num1, num2)
+    else if(operator === '-')inp.value = sub(num1, num2)
+    else if(operator === '*')inp.value = mul(num1, num2)
+    else if(operator === '/')inp.value = div(num1, num2)
 }
 
 console.log(saveDigit)
