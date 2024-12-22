@@ -1,7 +1,8 @@
 const digitOperatorContainer = document.querySelector(
   ".digit-operator-container"
 );
-const inp = document.querySelector("input");
+const inp = document.querySelector(".displayExpression");
+const liveDisplay = document.querySelector(".liveDisplay")
 
 //Stores each math element user click from the calculation
 //Setting the stop key to true stop the firstNum from appending digit when the summarize value is use for another expression
@@ -51,7 +52,9 @@ digitOperatorContainer.addEventListener("click", (e) => {
     inp.value += mathElement;
     // Add the firstNum
     storeMathElement["firstNum"] = inp.value;
-  } else if (
+  } 
+    //Allows operator to provide the evaluation of the previous expression
+    else if (
     storeMathElement["firstNum"] &&
     storeMathElement["secondNum"] &&
     splitOperators.includes(mathElement)
@@ -72,6 +75,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["operator"] = mathElement;
     //Passes the values inside the storeMathElement as argument to operate().
   } else if (mathElement === "=" && storeMathElement["secondNum"]) {
+    liveDisplay.value = `${storeMathElement.firstNum} ${storeMathElement.operator} ${storeMathElement.secondNum}`;
     operate(
       storeMathElement.operator,
       +storeMathElement.firstNum,
@@ -102,4 +106,6 @@ function operate(operator, num1, num2) {
   }
 }
 
+
+//View how the code is executed
 console.log(storeMathElement);

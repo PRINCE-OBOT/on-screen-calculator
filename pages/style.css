@@ -14,10 +14,14 @@
     --fw-bold : 900;
 
     --fs-big : 2.5rem;
+    --fs-small : 1.2rem;
 
     --mx-width : 16rem;
 
     --br-small : .2rem;
+
+    --bx-shadow-inset : inset .1rem .1rem .3rem rgba(0, 0, 0, 0.8);
+    --bx-shadow-normal : .1rem .1rem .3rem rgba(0, 0, 0, 0.9);
 
     --pd-small : .6rem;
 }
@@ -44,10 +48,21 @@ h5{
     border: .1rem dashed var(--cl-medium-dark-brown);
     border-radius: .2rem;
 }
-input{
+.liveDisplay{
+    font-weight: var(--fw-bold);
+    color: var(--cl-very-dark-brown);
+    background: var(--cl-white);
+    max-width: 6.5rem;
+    max-height: 1.5rem;
+    box-shadow: var(--bx-shadow-inset);
+    font-size: var(--fs-small);
+    text-align: center;
+}
+
+.displayExpression{
     flex: 1;
     padding: 1rem;
-    box-shadow: inset .1rem .1rem .3rem rgba(0, 0, 0, 0.8);
+    box-shadow: var(--bx-shadow-inset);
     border: none;
     border-radius: var(--br-small);
     background: var(--cl-light-grey);
@@ -63,7 +78,7 @@ input{
     width: calc(100% / 4);
     height: 4rem;
     background: var(--cl-medium-dark-brown);
-    box-shadow: .1rem .1rem .3rem rgba(0, 0, 0, 0.9);
+    box-shadow: var(--bx-shadow-normal);
     border-radius: var(--br-small);
     display: flex;
     justify-content: center;
