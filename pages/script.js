@@ -7,6 +7,11 @@ const liveDisplay = document.querySelector(".liveDisplay")
 //Stores each math element user click from the calculation
 //Setting the stop key to true stop the firstNum from appending digit when the summarize value is use for another expression
 let storeMathElement = { stop: false};
+//Stores both number and period. From the array, number is filtered and if there is period, just one is filtered to the filterPeriod array.
+let storeNumPeriod = []
+
+//filters all numbers from storeNumPeriod array and just one period
+let filterPeriod = []
 
 function add(num1, num2) {
   let result = num1 + num2;
@@ -30,14 +35,26 @@ function div(num1, num2) {
 
 digitOperatorContainer.addEventListener("click", (e) => {
   let mathElement = e.target.textContent;
-  let splitDigit = "0123456789".split("");
+  let splitDigit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", '.']
   let splitOperators = "+-*/".split("");
-
   // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
   if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
-    if (!storeMathElement["secondNum"]) inp.value = "";
-    inp.value += mathElement;
+    if (!storeMathElement["secondNum"]){ 
+      inp.value = "";
+      storeNumPeriod.splice(0)
+    }
+      
+    storeNumPeriod.push(mathElement)
+    filterPeriodFunc()
+     
+  //Append 0 before a period
+    if(filterPeriod[0] === '.'){
+      filterPeriod.splice(0, 0, '0')
+    }
+    
+    inp.value = filterPeriod.join('')
+    
     //Add the secondNum if the operator exist in the storeMathElement object
     storeMathElement["secondNum"] = inp.value;
     //Accepts only digit
@@ -45,11 +62,22 @@ digitOperatorContainer.addEventListener("click", (e) => {
     //Stops the summarize value to be appended to a number
     if (storeMathElement.stop) {
       if (splitDigit.includes(mathElement)) {
+        storeNumPeriod.splice(0)
         inp.value = "";
         storeMathElement.stop = false;
       }
     }
-    inp.value += mathElement;
+  
+  //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
+    storeNumPeriod.push(mathElement)
+    filterPeriodFunc()
+     
+  //Append 0 before a period
+    if(filterPeriod[0] === '.'){
+      filterPeriod.splice(0, 0, '0')
+    }
+    
+    inp.value = filterPeriod.join('')
     // Add the firstNum
     storeMathElement["firstNum"] = inp.value;
   } 
@@ -84,6 +112,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     );
     //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object 
   } else if (mathElement === "AC") {
+    storeNumPeriod.splice(0)
     inp.value = "";
     for (let key in storeMathElement) {
       if(key === "stop"){
@@ -134,5 +163,16 @@ function animateLiveDisplay(num1, num2){
 document.body.appendChild(style)
 }
 
+  function filterPeriodFunc(){
+    filterPeriod.splice(0)
+    for(i=0; i<storeNumPeriod.length; i++){
+   if(storeNumPeriod[i] === '.' && filterPeriod.includes('.')){
+     continue}
+   else{
+  filterPeriod.push(storeNumPeriod[i])
+        }
+       }
+    }
+    
 //View how the code is executed
 console.log(storeMathElement);

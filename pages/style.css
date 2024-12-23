@@ -102,3 +102,6 @@ h5{
 .digit-operator-container div:active{
     opacity:0.8;
 }
+.ac{
+  flex: 1;
+}
