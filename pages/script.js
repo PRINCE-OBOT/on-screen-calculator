@@ -59,6 +59,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["secondNum"] &&
     splitOperators.includes(mathElement)
   ) {
+    liveDisplayFunc()
     operate(
       storeMathElement.operator,
       +storeMathElement.firstNum,
@@ -75,17 +76,22 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["operator"] = mathElement;
     //Passes the values inside the storeMathElement as argument to operate().
   } else if (mathElement === "=" && storeMathElement["secondNum"]) {
-    liveDisplay.value = `${storeMathElement.firstNum} ${storeMathElement.operator} ${storeMathElement.secondNum}`;
+    liveDisplayFunc()
     operate(
       storeMathElement.operator,
       +storeMathElement.firstNum,
       +storeMathElement.secondNum
     );
-    //Clears the input screen and storeMathElement object
+    //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object 
   } else if (mathElement === "AC") {
     inp.value = "";
     for (let key in storeMathElement) {
+      if(key === "stop"){
+        storeMathElement[key] = true
+      }
+      else{
       delete storeMathElement[key];
+      }
     }
   }
 });
@@ -94,7 +100,7 @@ function operate(operator, num1, num2) {
   if (operator === "+") inp.value = add(num1, num2);
   else if (operator === "-") inp.value = sub(num1, num2);
   else if (operator === "*") inp.value = mul(num1, num2);
-  else if (operator === "/") inp.value = div(num1, num2).toFixed(2);
+  else if (operator === "/"){if(!Number.isInteger(div(num1, num2))) inp.value = div(num1, num2).toFixed(2); else { inp.value = div(num1, num2)}};
 
   let updateFirstNum = inp.value;
   for (let key in storeMathElement) {
@@ -106,6 +112,27 @@ function operate(operator, num1, num2) {
   }
 }
 
+function liveDisplayFunc(){
+   liveDisplay.textContent = `${storeMathElement.firstNum} ${storeMathElement.operator} ${storeMathElement.secondNum}`;
+   
+   animateLiveDisplay(storeMathElement.firstNum, storeMathElement.secondNum)
+}
+
+function animateLiveDisplay(num1, num2){
+  let len1= +num1.length
+  let len2= +num2.length
+  
+  //Calculate the length of the numbers and apply it to it keyframes so as to provide adequate visibility for longer numbers
+  let lenTotal = parseInt((len1 + len2) / 1.5)
+  
+  
+  const style = document.createElement('style')
+   style.textContent = `@keyframes scrolltext{
+  50%{transform : translateX(0)}
+  100%{transform: translateX(-${lenTotal}rem)};
+}`
+document.body.appendChild(style)
+}
 
 //View how the code is executed
 console.log(storeMathElement);

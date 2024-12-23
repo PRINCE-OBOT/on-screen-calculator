@@ -48,15 +48,25 @@ h5{
     border: .1rem dashed var(--cl-medium-dark-brown);
     border-radius: .2rem;
 }
-.liveDisplay{
-    font-weight: var(--fw-bold);
+.liveDisplayCon{
+  position: relative;
+  overflow: hidden;
+  max-width: 5rem;
+  min-width: 4.5rem;
+  height: 2rem;
+  font-weight: var(--fw-bold);
     color: var(--cl-very-dark-brown);
     background: var(--cl-white);
-    max-width: 6.5rem;
-    max-height: 1.5rem;
     box-shadow: var(--bx-shadow-inset);
     font-size: var(--fs-small);
+}
+
+.liveDisplay{
+    
     text-align: center;
+    position: absolute;
+    animation: scrolltext 2s infinite alternate;
+    white-space: nowrap;
 }
 
 .displayExpression{
