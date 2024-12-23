@@ -15,22 +15,34 @@ let filterPeriod = []
 
 function add(num1, num2) {
   let result = num1 + num2;
-  return result;
+  if(!Number.isInteger(result)){
+    return result.toFixed(2)
+  }
+  else{ return result}
 }
 
 function sub(num1, num2) {
   let result = num1 - num2;
-  return result;
+   if(!Number.isInteger(result)){
+    return result.toFixed(2)
+  }
+  else{ return result}
 }
 
 function mul(num1, num2) {
   let result = num1 * num2;
-  return result;
+   if(!Number.isInteger(result)){
+    return result.toFixed(2)
+  }
+  else{ return result}
 }
 
 function div(num1, num2) {
   let result = num1 / num2;
-  return result;
+   if(!Number.isInteger(result)){
+    return result.toFixed(2)
+  }
+  else{ return result}
 }
 
 digitOperatorContainer.addEventListener("click", (e) => {
@@ -129,7 +141,7 @@ function operate(operator, num1, num2) {
   if (operator === "+") inp.value = add(num1, num2);
   else if (operator === "-") inp.value = sub(num1, num2);
   else if (operator === "*") inp.value = mul(num1, num2);
-  else if (operator === "/"){if(!Number.isInteger(div(num1, num2))) inp.value = div(num1, num2).toFixed(2); else { inp.value = div(num1, num2)}};
+  else if (operator === "/") inp.value = div(num1, num2)
 
   let updateFirstNum = inp.value;
   for (let key in storeMathElement) {
