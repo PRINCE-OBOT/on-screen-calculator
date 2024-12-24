@@ -80,8 +80,12 @@ digitOperatorContainer.addEventListener("click", (e) => {
       }
     }
   
-  //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
     storeNumPeriod.push(mathElement)
+    
+    //Ensures the calculator does not accept more than one zero when starting a digit.
+    filterZeroFunc()
+    
+  //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
     filterPeriodFunc()
      
   //Append 0 before a period
@@ -184,6 +188,12 @@ document.body.appendChild(style)
   filterPeriod.push(storeNumPeriod[i])
         }
        }
+    }
+    
+    function filterZeroFunc(){
+      if(storeNumPeriod[0] === '0' && storeNumPeriod[1] === '0'){
+      storeNumPeriod.splice(1, 1)
+      }
     }
     
 //View how the code is executed
