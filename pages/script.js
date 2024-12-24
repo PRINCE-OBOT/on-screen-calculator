@@ -14,6 +14,9 @@ let storeNumPeriod = [];
 //filters all numbers from storeNumPeriod array and just one period
 let filterPeriod = [];
 
+//It toggles the sign of numbers (+/-)
+const sign = [];
+
 function add(num1, num2) {
   let result = num1 + num2;
   if (!Number.isInteger(result)) {
@@ -43,7 +46,9 @@ function mul(num1, num2) {
 
 function div(num1, num2) {
   let result = num1 / num2;
-  if (!Number.isInteger(result)) {
+  if (result === Infinity) {
+    return `Cannot => divide by 0`;
+  } else if (!Number.isInteger(result)) {
     return result.toFixed(2);
   } else {
     return result;
@@ -54,6 +59,19 @@ digitOperatorContainer.addEventListener("click", (e) => {
   let mathElement = e.target.textContent;
   let splitDigit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
   let splitOperators = "+-*/".split("");
+
+  // if(mathElement === '+/-'){
+  //   let inpValue = +inp.value
+  //   if(storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]){
+  //     if(inpValue > -Infinity){
+  //       sign.splice(0, 1, '+')
+  //     }
+  //     else{
+  //       sign.splice(0, 1, '-')
+  //     }
+  //   }
+  // }
+
   // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
   if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
@@ -202,14 +220,13 @@ function filterZeroFunc() {
 resetButton.addEventListener("click", () => {
   inp.value = "";
   liveDisplay.textContent = "";
-  storeNumPeriod.splice(0)
-  
-  for(let key in storeMathElement){
-    if(key === "stop"){
-      storeMathElement[key] = false
-    }
-    else {
-      delete storeMathElement[key]
+  storeNumPeriod.splice(0);
+
+  for (let key in storeMathElement) {
+    if (key === "stop") {
+      storeMathElement[key] = false;
+    } else {
+      delete storeMathElement[key];
     }
   }
 });
