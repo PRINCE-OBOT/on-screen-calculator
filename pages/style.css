@@ -9,8 +9,10 @@
     --cl-very-dark-brown : rgb(114, 57, 3);
     --cl-light-grey : rgb(217, 218, 217);
     --cl-white : rgb(231, 237, 204);
+    --cl-dark-green : rgb(61, 87, 9);
     --cl-dark-brown : rgb(250, 185, 6);
-    
+    --cl-medium-red : rgb(230, 12, 2);
+    --cl-cyan:  rgb(25, 127, 172);
     --fw-bold : 900;
 
     --fs-big : 2.5rem;
@@ -55,18 +57,20 @@ h5{
   min-width: 4.5rem;
   height: 2rem;
   font-weight: var(--fw-bold);
-    color: var(--cl-very-dark-brown);
-    background: var(--cl-white);
-    box-shadow: var(--bx-shadow-inset);
-    font-size: var(--fs-small);
+  color: var(--cl-very-dark-brown);
+  background: var(--cl-white);
+  box-shadow: var(--bx-shadow-inset);
+  font-size: var(--fs-small);
+  display: flex;
+  align-items: center;
 }
 
 .liveDisplay{
-    
     text-align: center;
     position: absolute;
     animation: scrolltext 2s infinite alternate;
     white-space: nowrap;
+    margin-left: .5rem;
 }
 
 .displayExpression{
@@ -102,6 +106,19 @@ h5{
 .digit-operator-container div:active{
     opacity:0.8;
 }
-.ac{
+.digit-operator-container .ac{
+  background: var(--cl-medium-red);
+}
+.digit-operator-container .plus-minus, .digit-operator-container .percent{
+  background: Var(--cl-dark-brown);
+  color: Var(--cl-very-dark-brown);
+}
+.digit-operator-container .operators{
+  background: Var(--cl-dark-green);
+}
+.digit-operator-container .zero{
   flex: 1;
+}
+.digit-operator-container .equal{
+  background:var(--cl-cyan);
 }
