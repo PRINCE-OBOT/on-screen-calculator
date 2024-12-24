@@ -9,10 +9,12 @@
     --cl-very-dark-brown : rgb(114, 57, 3);
     --cl-light-grey : rgb(217, 218, 217);
     --cl-white : rgb(231, 237, 204);
-    --cl-dark-green : rgb(61, 87, 9);
+    --cl-dark-green : rgb(132, 93, 71);
     --cl-dark-brown : rgb(250, 185, 6);
     --cl-medium-red : rgb(230, 12, 2);
-    --cl-cyan:  rgb(25, 127, 172);
+    --cl-medium-green:  rgb(116, 130, 9);
+    --cl-light-green : rgb(143, 250, 163);
+    
     --fw-bold : 900;
 
     --fs-big : 2.5rem;
@@ -49,6 +51,13 @@ h5{
     padding: var(--pd-small);
     border: .1rem dashed var(--cl-medium-dark-brown);
     border-radius: .2rem;
+}
+.resetButton{
+  margin-left: 2rem;
+  cursor: pointer;
+  background: var(--cl-medium-red);
+  color: var(--cl-light-green);
+  border-radius: .2rem;
 }
 .liveDisplayCon{
   position: relative;
@@ -115,10 +124,13 @@ h5{
 }
 .digit-operator-container .operators{
   background: Var(--cl-dark-green);
+  color: var(--cl-dark-brown);
 }
 .digit-operator-container .zero{
   flex: 1;
 }
 .digit-operator-container .equal{
-  background:var(--cl-cyan);
+  background:var(--cl-medium-green);
+  color: var(--cl-light-green);
+  font-size: var(--fs-big);
 }
