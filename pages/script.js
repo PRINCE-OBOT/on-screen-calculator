@@ -123,6 +123,14 @@ digitOperatorContainer.addEventListener("click", (e) => {
   ) {
     firstNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
+  } else if (
+    mathElement === "%" &&
+    storeMathElement["firstNum"] &&
+    storeMathElement["secondNum"] &&
+    storeMathElement["operator"]
+  ) {
+    secondNumConvertToPercentage();
+    liveDisplay.textContent = inp.value;
   } else if (splitDigit.includes(mathElement)) {
     //Stops the summarize value to be appended to a number
     if (storeMathElement.stop) {
@@ -295,6 +303,21 @@ function firstNumConvertToPercentage() {
   inp.value = filterPeriod.join("");
   //store the displayed data on the screen in the storeMathElement object
   storeMathElement["firstNum"] = inp.value;
+}
+
+function secondNumConvertToPercentage() {
+  let inpValue = +inp.value;
+  let convertToPercentage = inpValue / 100;
+  storeNumPeriod.splice(0);
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  storeNumPeriod.splice(0, 0, convertToPercentage);
+  //Extract the convertToPercentage value
+  filterPeriodFunc();
+  //Display the data on the screen
+  inp.value = filterPeriod.join("");
+  //store the displayed data on the screen in the storeMathElement object
+  storeMathElement["secondNum"] = inp.value;
 }
 
 function filterPeriodFunc() {
