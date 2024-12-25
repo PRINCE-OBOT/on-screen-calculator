@@ -254,7 +254,11 @@ function firstNumPositiveToNegative() {
   storeNumPeriod.splice(0);
 
   //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(0, 0, `-${inp.value}`);
+  let tempHoldInpValue = `-${inp.value}`.split("");
+
+  for(let i = 0; i<tempHoldInpValue.length; i++){
+    storeNumPeriod.push(tempHoldInpValue[i])
+  }
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -279,8 +283,12 @@ function firstNumNegativeToPositive() {
 function secondNumPositiveToNegative() {
   storeNumPeriod.splice(0);
 
+  let tempHoldInpValue = `-${inp.value}`.split("");
+
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+      storeNumPeriod.push(tempHoldInpValue[i]);
+    }
   //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(0, 0, `-${inp.value}`);
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -307,8 +315,12 @@ function firstNumConvertToPercentage() {
   let convertToPercentage = inpValue / 100;
   storeNumPeriod.splice(0);
 
+  let tempHoldInpValue = `${convertToPercentage}`.split("");
+
   //Update the storeNumPeriod to store convertToPercentage value
-  storeNumPeriod.splice(0, 0, convertToPercentage);
+    for (let i = 0; i < tempHoldInpValue.length; i++) {
+      storeNumPeriod.push(tempHoldInpValue[i]);
+    }
   //Extract the convertToPercentage value
   filterPeriodFunc();
   //Display the data on the screen
@@ -322,8 +334,12 @@ function secondNumConvertToPercentage() {
   let convertToPercentage = inpValue / 100;
   storeNumPeriod.splice(0);
 
+  let tempHoldInpValue = `${convertToPercentage}`.split("");
+
   //Update the storeNumPeriod to store convertToPercentage value
-  storeNumPeriod.splice(0, 0, convertToPercentage);
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
   //Extract the convertToPercentage value
   filterPeriodFunc();
   //Display the data on the screen
@@ -363,3 +379,5 @@ function clearInputScreen() {
 
 //View how the code is executed
 console.log(storeMathElement);
+console.log(storeNumPeriod);
+console.log(filterPeriod);
