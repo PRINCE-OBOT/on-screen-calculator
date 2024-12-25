@@ -12,7 +12,7 @@
     to left,
     var(--cl-light-grey),
     var(--cl-very-dark-brown),
-    var(--cl-medium-dark-brown) .7rem
+    var(--cl-medium-dark-brown) 0.7rem
   );
   --cl-very-dark-brown: rgb(114, 57, 3);
   --cl-light-grey: rgb(217, 218, 217);
@@ -55,7 +55,7 @@ body {
   background: var(--cl-very-dark-brown);
   color: var(--cl-dark-brown);
 }
-.info{
+.info {
   color: var(--cl-white);
 }
 h5 {
