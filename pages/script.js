@@ -8,14 +8,11 @@ const resetButton = document.querySelector(".resetButton");
 //Stores each math element user click from the calculation
 //Setting the stop key to true stop the firstNum from appending digit when the summarize value is use for another expression
 let storeMathElement = { stop: false };
-//Stores both number and period. From the array, number is filtered and if there is period, just one is filtered to the filterPeriod array.
+//Stores both number and period. From the array number is filtered and if there is period, just one is filtered to the filterPeriod array.
 let storeNumPeriod = [];
 
 //filters all numbers from storeNumPeriod array and just one period
 let filterPeriod = [];
-
-//It toggles the sign of numbers (+/-)
-const sign = [];
 
 function add(num1, num2) {
   let result = num1 + num2;
@@ -47,7 +44,7 @@ function mul(num1, num2) {
 function div(num1, num2) {
   let result = num1 / num2;
   if (result === Infinity) {
-    return `Cannot => divide by 0`;
+    return `Can't divide by 0`;
   } else if (!Number.isInteger(result)) {
     return result.toFixed(2);
   } else {
@@ -60,43 +57,38 @@ digitOperatorContainer.addEventListener("click", (e) => {
   let splitDigit = "0123456789.".split("");
   let splitOperators = "+-*/".split("");
 
-//continue here
-  
-  let inpValue = +inp.value
-  if(mathElement === '+/-' && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]){
-  if(inpValue > 0){
-        storeNumPeriod.splice(0, 0, '-')
-        filterPeriodFunc()
-  
-  //Update the storeNumPeriod to store the current value display in the input screen
-        storeNumPeriod.splice(1)
-        storeNumPeriod.splice(1, 0, inp.value)
-        filterPeriodFunc()
-        
-  //Execute mathElement that meet the filter condition
-        inp.value = filterPeriod.join("")
-        storeMathElement["firstNum"] = inp.value
-        
-      }
-     else if(inpValue < 0){
-       let extractInp = inp.value.split("")
-       let extractPositiveInp = extractInp.slice(1).join("")
-       
-         storeNumPeriod.splice(0, 1)
-         filterPeriodFunc()
-        
-  
-   //Update the storeNumPeriod to store the current value display in the input screen
-        storeNumPeriod.splice(0)
-        storeNumPeriod.splice(0, 0, extractPositiveInp)
-        filterPeriodFunc()
-        
-  //Execute mathElement that meet the filter condition 
-         inp.value = filterPeriod.join("")
-         storeMathElement["firstNum"]= inp.value
-       }
-     }
-  
+  //continue here
+
+  let inpValue = +inp.value;
+  if (
+    mathElement === "+/-" &&
+    storeMathElement["firstNum"] &&
+    !storeMathElement["secondNum"] &&
+    !storeMathElement["operator"]
+  ) {
+    if (inpValue > 0) {
+      //Append - to a number (firstNum)
+      firstNumPositiveToNegative();
+    } else if (inpValue < 0) {
+      //Append + to a number (firstNum)
+      firstNumNegativeToPositive();
+    }
+  }
+  else if (
+    mathElement === "+/-" &&
+    storeMathElement["firstNum"] &&
+    storeMathElement["secondNum"] &&
+    storeMathElement["operator"]
+  ) {
+    if (inpValue > 0) {
+      //Append - to a number (secondNum)
+      secondNumPositiveToNegative();
+    } else if (inpValue < 0) {
+      //Append + to a number (secondNum)
+      secondNumNegativeToPositive();
+    }
+  }
+
   // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
   if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
@@ -224,6 +216,69 @@ function animateLiveDisplay(num1, num2) {
 }`;
   document.body.appendChild(style);
 }
+
+function firstNumPositiveToNegative() {
+  storeNumPeriod.splice(0, 0, "-");
+  filterPeriodFunc();
+
+  //Update the storeNumPeriod to store the current value display in the input screen
+  storeNumPeriod.splice(1);
+  storeNumPeriod.splice(1, 0, inp.value);
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["firstNum"] = inp.value;
+}
+
+function firstNumNegativeToPositive() {
+  let extractInp = inp.value.split("");
+  let extractPositiveInp = extractInp.slice(1).join("");
+
+  storeNumPeriod.splice(0, 1);
+  filterPeriodFunc();
+
+  //Update the storeNumPeriod to store the current value display in the input screen
+  storeNumPeriod.splice(0);
+  storeNumPeriod.splice(0, 0, extractPositiveInp);
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["firstNum"] = inp.value;
+}
+
+function secondNumPositiveToNegative() {
+  storeNumPeriod.splice(0, 0, "-");
+  filterPeriodFunc();
+
+  //Update the storeNumPeriod to store the current value display in the input screen
+  storeNumPeriod.splice(1);
+  storeNumPeriod.splice(1, 0, inp.value);
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["secondNum"] = inp.value;
+}
+
+function secondNumNegativeToPositive() {
+  let extractInp = inp.value.split("");
+  let extractPositiveInp = extractInp.slice(1).join("");
+
+  storeNumPeriod.splice(0, 1);
+  filterPeriodFunc();
+
+  //Update the storeNumPeriod to store the current value display in the input screen
+  storeNumPeriod.splice(0);
+  storeNumPeriod.splice(0, 0, extractPositiveInp);
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["secondNum"] = inp.value;
+}
+
 
 function filterPeriodFunc() {
   filterPeriod.splice(0);
