@@ -57,8 +57,6 @@ digitOperatorContainer.addEventListener("click", (e) => {
   let splitDigit = "0123456789.".split("");
   let splitOperators = "+-*/".split("");
 
-  //continue here
-
   let inpValue = +inp.value;
   if (
     (mathElement === "+/-" &&
@@ -93,7 +91,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
   }
 
   // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
-  if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
+  else if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
     if (!storeMathElement["secondNum"]) {
       inp.value = "";
@@ -113,6 +111,18 @@ digitOperatorContainer.addEventListener("click", (e) => {
     //Add the secondNum if the operator exist in the storeMathElement object
     storeMathElement["secondNum"] = inp.value;
     //Accepts only digit
+  } else if (
+    (mathElement === "%" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElement === "%" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
+  ) {
+    firstNumConvertToPercentage();
+    liveDisplay.textContent = inp.value;
   } else if (splitDigit.includes(mathElement)) {
     //Stops the summarize value to be appended to a number
     if (storeMathElement.stop) {
@@ -221,12 +231,10 @@ function animateLiveDisplay(num1, num2) {
 }
 
 function firstNumPositiveToNegative() {
-  storeNumPeriod.splice(0, 0, "-");
-  filterPeriodFunc();
+  storeNumPeriod.splice(0);
 
   //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(1);
-  storeNumPeriod.splice(1, 0, inp.value);
+  storeNumPeriod.splice(0, 0, `-${inp.value}`);
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -237,9 +245,6 @@ function firstNumPositiveToNegative() {
 function firstNumNegativeToPositive() {
   let extractInp = inp.value.split("");
   let extractPositiveInp = extractInp.slice(1).join("");
-
-  storeNumPeriod.splice(0, 1);
-  filterPeriodFunc();
 
   //Update the storeNumPeriod to store the current value display in the input screen
   storeNumPeriod.splice(0);
@@ -252,12 +257,10 @@ function firstNumNegativeToPositive() {
 }
 
 function secondNumPositiveToNegative() {
-  storeNumPeriod.splice(0, 0, "-");
-  filterPeriodFunc();
+  storeNumPeriod.splice(0);
 
   //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(1);
-  storeNumPeriod.splice(1, 0, inp.value);
+  storeNumPeriod.splice(0, 0, `-${inp.value}`);
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -269,17 +272,29 @@ function secondNumNegativeToPositive() {
   let extractInp = inp.value.split("");
   let extractPositiveInp = extractInp.slice(1).join("");
 
-  storeNumPeriod.splice(0, 1);
-  filterPeriodFunc();
-
-  //Update the storeNumPeriod to store the current value display in the input screen
   storeNumPeriod.splice(0);
+  //Update the storeNumPeriod to store the current value display in the input screen
   storeNumPeriod.splice(0, 0, extractPositiveInp);
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
   inp.value = filterPeriod.join("");
   storeMathElement["secondNum"] = inp.value;
+}
+
+function firstNumConvertToPercentage() {
+  let inpValue = +inp.value;
+  let convertToPercentage = inpValue / 100;
+  storeNumPeriod.splice(0);
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  storeNumPeriod.splice(0, 0, convertToPercentage);
+  //Extract the convertToPercentage value
+  filterPeriodFunc();
+  //Display the data on the screen
+  inp.value = filterPeriod.join("");
+  //store the displayed data on the screen in the storeMathElement object
+  storeMathElement["firstNum"] = inp.value;
 }
 
 function filterPeriodFunc() {
