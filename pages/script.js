@@ -57,21 +57,46 @@ function div(num1, num2) {
 
 digitOperatorContainer.addEventListener("click", (e) => {
   let mathElement = e.target.textContent;
-  let splitDigit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+  let splitDigit = "0123456789.".split("");
   let splitOperators = "+-*/".split("");
 
-  // if(mathElement === '+/-'){
-  //   let inpValue = +inp.value
-  //   if(storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]){
-  //     if(inpValue > -Infinity){
-  //       sign.splice(0, 1, '+')
-  //     }
-  //     else{
-  //       sign.splice(0, 1, '-')
-  //     }
-  //   }
-  // }
-
+//continue here
+  
+  let inpValue = +inp.value
+  if(mathElement === '+/-' && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]){
+  if(inpValue > 0){
+        storeNumPeriod.splice(0, 0, '-')
+        filterPeriodFunc()
+  
+  //Update the storeNumPeriod to store the current value display in the input screen
+        storeNumPeriod.splice(1)
+        storeNumPeriod.splice(1, 0, inp.value)
+        filterPeriodFunc()
+        
+  //Execute mathElement that meet the filter condition
+        inp.value = filterPeriod.join("")
+        storeMathElement["firstNum"] = inp.value
+        
+      }
+     else if(inpValue < 0){
+       let extractInp = inp.value.split("")
+       let extractPositiveInp = extractInp.slice(1).join("")
+       
+         storeNumPeriod.splice(0, 1)
+         filterPeriodFunc()
+        
+  
+   //Update the storeNumPeriod to store the current value display in the input screen
+        storeNumPeriod.splice(0)
+        storeNumPeriod.splice(0, 0, extractPositiveInp)
+        filterPeriodFunc()
+        
+  //Execute mathElement that meet the filter condition 
+         inp.value = filterPeriod.join("")
+         storeMathElement["firstNum"]= inp.value
+       }
+     }
+  
   // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
   if (storeMathElement["operator"] && splitDigit.includes(mathElement)) {
     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
