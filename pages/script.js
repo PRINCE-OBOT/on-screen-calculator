@@ -53,6 +53,7 @@ function div(num1, num2) {
 }
 
 digitOperatorContainer.addEventListener("click", (e) => {
+  let mathElementClassName = e.target.getAttribute("class");
   let mathElement = e.target.textContent;
   let splitDigit = "0123456789.".split("");
   let splitOperators = "+-*/".split("");
@@ -173,6 +174,14 @@ digitOperatorContainer.addEventListener("click", (e) => {
       +storeMathElement.secondNum
     );
     storeMathElement["operator"] = mathElement;
+  } else if (
+    mathElementClassName === "backspace" &&
+    storeMathElement["firstNum" && !storeMathElement["secondNum"]] &&
+    !storeMathElement["operator"] &&
+    mathElementClassName === "backspace" &&
+    storeMathElement["firstNum"] &&
+    !storeMathElement["secondNum"] && storeMathElement["operator"]) {
+      backspaceFunc()
   }
   //Checks if the firstNum exist in the storeMathElement object before the operator is been added to the storeMathElement object.
   else if (
@@ -256,8 +265,8 @@ function firstNumPositiveToNegative() {
   //Update the storeNumPeriod to store the current value display in the input screen
   let tempHoldInpValue = `-${inp.value}`.split("");
 
-  for(let i = 0; i<tempHoldInpValue.length; i++){
-    storeNumPeriod.push(tempHoldInpValue[i])
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
   }
   filterPeriodFunc();
 
@@ -272,7 +281,13 @@ function firstNumNegativeToPositive() {
 
   //Update the storeNumPeriod to store the current value display in the input screen
   storeNumPeriod.splice(0);
-  storeNumPeriod.splice(0, 0, extractPositiveInp);
+
+  let tempHoldInpValue = `${extractPositiveInp}`.split("");
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -286,8 +301,8 @@ function secondNumPositiveToNegative() {
   let tempHoldInpValue = `-${inp.value}`.split("");
 
   for (let i = 0; i < tempHoldInpValue.length; i++) {
-      storeNumPeriod.push(tempHoldInpValue[i]);
-    }
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
   //Update the storeNumPeriod to store the current value display in the input screen
   filterPeriodFunc();
 
@@ -301,8 +316,13 @@ function secondNumNegativeToPositive() {
   let extractPositiveInp = extractInp.slice(1).join("");
 
   storeNumPeriod.splice(0);
+  let tempHoldInpValue = `${extractPositiveInp}`.split("");
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
   //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(0, 0, extractPositiveInp);
   filterPeriodFunc();
 
   //Execute mathElement that meet the filter condition
@@ -318,9 +338,9 @@ function firstNumConvertToPercentage() {
   let tempHoldInpValue = `${convertToPercentage}`.split("");
 
   //Update the storeNumPeriod to store convertToPercentage value
-    for (let i = 0; i < tempHoldInpValue.length; i++) {
-      storeNumPeriod.push(tempHoldInpValue[i]);
-    }
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
   //Extract the convertToPercentage value
   filterPeriodFunc();
   //Display the data on the screen

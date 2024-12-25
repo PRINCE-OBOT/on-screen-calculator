@@ -8,6 +8,12 @@
 
 :root {
   --cl-medium-dark-brown: rgb(176, 88, 5);
+  --cl-linear: linear-gradient(
+    to left,
+    var(--cl-light-grey),
+    var(--cl-very-dark-brown),
+    var(--cl-medium-dark-brown) .7rem
+  );
   --cl-very-dark-brown: rgb(114, 57, 3);
   --cl-light-grey: rgb(217, 218, 217);
   --cl-white: rgb(231, 237, 204);
@@ -124,6 +130,9 @@ h5 {
 .digit-operator-container .percent {
   background: Var(--cl-dark-brown);
   color: Var(--cl-very-dark-brown);
+}
+.digit-operator-container .backspace {
+  background: var(--cl-linear);
 }
 .digit-operator-container .operators {
   background: Var(--cl-dark-green);
