@@ -11,7 +11,7 @@ let storeMathElement = { stop: false };
 //Stores both number and period. From the array number is filtered and if there is period, just one is filtered to the filterPeriod array.
 let storeNumPeriod = [];
 
-//filters all numbers from storeNumPeriod array and just one period
+//filters all numbers from storeNumPeriod array and just one period. and also ensure one zero will be added in the beginning of a number
 let filterPeriod = [];
 
 function add(num1, num2) {
@@ -69,10 +69,10 @@ digitOperatorContainer.addEventListener("click", (e) => {
       storeMathElement["operator"])
   ) {
     if (inpValue > 0) {
-      //Append - to a number (firstNum)
+      //Append "-" to the number (firstNum)
       firstNumPositiveToNegative();
     } else if (inpValue < 0) {
-      //Append + to a number (firstNum)
+      //Append "+" to the number (firstNum)
       firstNumNegativeToPositive();
     }
   } else if (
@@ -82,10 +82,10 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["operator"]
   ) {
     if (inpValue > 0) {
-      //Append - to a number (secondNum)
+      //Append "-" to the number (secondNum)
       secondNumPositiveToNegative();
     } else if (inpValue < 0) {
-      //Append + to a number (secondNum)
+      //Append "+" to the number (secondNum)
       secondNumNegativeToPositive();
     }
   }
@@ -121,6 +121,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
       !storeMathElement["secondNum"] &&
       storeMathElement["operator"])
   ) {
+    //Convert firstNum to percentage
     firstNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
   } else if (
@@ -129,6 +130,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["secondNum"] &&
     storeMathElement["operator"]
   ) {
+    //Convert secondNum to percentage
     secondNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
   } else if (splitDigit.includes(mathElement)) {
@@ -189,14 +191,20 @@ digitOperatorContainer.addEventListener("click", (e) => {
     );
     //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object
   } else if (mathElement === "AC") {
-    storeNumPeriod.splice(0);
-    inp.value = "";
-    for (let key in storeMathElement) {
-      if (key === "stop") {
-        storeMathElement[key] = true;
-      } else {
-        delete storeMathElement[key];
-      }
+    clearInputScreen();
+  }
+});
+
+resetButton.addEventListener("click", () => {
+  inp.value = "";
+  liveDisplay.textContent = "";
+  storeNumPeriod.splice(0);
+
+  for (let key in storeMathElement) {
+    if (key === "stop") {
+      storeMathElement[key] = false;
+    } else {
+      delete storeMathElement[key];
     }
   }
 });
@@ -207,14 +215,7 @@ function operate(operator, num1, num2) {
   else if (operator === "*") inp.value = mul(num1, num2);
   else if (operator === "/") inp.value = div(num1, num2);
 
-  let updateFirstNum = inp.value;
-  for (let key in storeMathElement) {
-    if (key === "firstNum") storeMathElement[key] = updateFirstNum;
-    else if (key === "stop") storeMathElement[key] = true;
-    else {
-      delete storeMathElement[key];
-    }
-  }
+  updateFirstNumFunc();
 }
 
 function liveDisplayFunc() {
@@ -236,6 +237,17 @@ function animateLiveDisplay(num1, num2) {
   100%{transform: translateX(-${lenTotal}rem)};
 }`;
   document.body.appendChild(style);
+}
+
+function updateFirstNumFunc() {
+  let updateFirstNum = inp.value;
+  for (let key in storeMathElement) {
+    if (key === "firstNum") storeMathElement[key] = updateFirstNum;
+    else if (key === "stop") storeMathElement[key] = true;
+    else {
+      delete storeMathElement[key];
+    }
+  }
 }
 
 function firstNumPositiveToNegative() {
@@ -337,19 +349,17 @@ function filterZeroFunc() {
   }
 }
 
-resetButton.addEventListener("click", () => {
-  inp.value = "";
-  liveDisplay.textContent = "";
+function clearInputScreen() {
   storeNumPeriod.splice(0);
-
+  inp.value = "";
   for (let key in storeMathElement) {
     if (key === "stop") {
-      storeMathElement[key] = false;
+      storeMathElement[key] = true;
     } else {
       delete storeMathElement[key];
     }
   }
-});
+}
 
 //View how the code is executed
 console.log(storeMathElement);
