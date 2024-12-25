@@ -61,10 +61,14 @@ digitOperatorContainer.addEventListener("click", (e) => {
 
   let inpValue = +inp.value;
   if (
-    mathElement === "+/-" &&
-    storeMathElement["firstNum"] &&
-    !storeMathElement["secondNum"] &&
-    !storeMathElement["operator"]
+    (mathElement === "+/-" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElement === "+/-" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
   ) {
     if (inpValue > 0) {
       //Append - to a number (firstNum)
@@ -73,8 +77,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
       //Append + to a number (firstNum)
       firstNumNegativeToPositive();
     }
-  }
-  else if (
+  } else if (
     mathElement === "+/-" &&
     storeMathElement["firstNum"] &&
     storeMathElement["secondNum"] &&
@@ -278,7 +281,6 @@ function secondNumNegativeToPositive() {
   inp.value = filterPeriod.join("");
   storeMathElement["secondNum"] = inp.value;
 }
-
 
 function filterPeriodFunc() {
   filterPeriod.splice(0);
