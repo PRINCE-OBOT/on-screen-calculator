@@ -176,12 +176,15 @@ digitOperatorContainer.addEventListener("click", (e) => {
     storeMathElement["operator"] = mathElement;
   } else if (
     mathElementClassName === "backspace" &&
-    storeMathElement["firstNum" && !storeMathElement["secondNum"]] &&
-    !storeMathElement["operator"] &&
+    storeMathElement["firstNum"] && !storeMathElement["secondNum"] &&
+    !storeMathElement["operator"] ||
     mathElementClassName === "backspace" &&
     storeMathElement["firstNum"] &&
     !storeMathElement["secondNum"] && storeMathElement["operator"]) {
-      backspaceFunc()
+      firstNumBackspaceFunc()
+  }
+  else if(mathElementClassName === "backspace" && storeMathElement["firstNum"]&& storeMathElement["operator"] && storeMathElement["secondNum"]){
+    secondNumBackspaceFunc()
   }
   //Checks if the firstNum exist in the storeMathElement object before the operator is been added to the storeMathElement object.
   else if (
@@ -384,6 +387,44 @@ function filterZeroFunc() {
     storeNumPeriod.splice(1, 1);
   }
 }
+
+
+function firstNumBackspaceFunc() {
+  storeNumPeriod.splice(0);
+  let extractInp = inp.value.split("");
+  
+  extractInp.splice(extractInp.length-1, 1)
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  for (let i = 0; i <extractInp.length; i++) {
+    storeNumPeriod.push(extractInp[i]);
+  }
+  //Update the storeNumPeriod to store the current value display in the input screen
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["firstNum"] = inp.value;
+}
+
+function secondNumBackspaceFunc() {
+  storeNumPeriod.splice(0);
+  let extractInp = inp.value.split("");
+  
+  extractInp.splice(extractInp.length-1, 1)
+
+  //Update the storeNumPeriod to store convertToPercentage value
+  for (let i = 0; i <extractInp.length; i++) {
+    storeNumPeriod.push(extractInp[i]);
+  }
+  //Update the storeNumPeriod to store the current value display in the input screen
+  filterPeriodFunc();
+
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+  storeMathElement["secondNum"] = inp.value;
+}
+
 
 function clearInputScreen() {
   storeNumPeriod.splice(0);
