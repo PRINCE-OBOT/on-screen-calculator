@@ -55,6 +55,9 @@ body {
   background: var(--cl-very-dark-brown);
   color: var(--cl-dark-brown);
 }
+.info{
+  color: var(--cl-white);
+}
 h5 {
   padding: var(--pd-small);
   border: 0.1rem dashed var(--cl-medium-dark-brown);
