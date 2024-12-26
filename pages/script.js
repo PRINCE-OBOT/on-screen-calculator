@@ -111,8 +111,9 @@ digitOperatorContainer.addEventListener("click", (e) => {
 
     //Add the secondNum if the operator exist in the storeMathElement object
     storeMathElement["secondNum"] = inp.value;
-    //Accepts only digit
-  } else if (
+  } 
+  //Accepts only digit
+  else if (
     (mathElement === "%" &&
       storeMathElement["firstNum"] &&
       !storeMathElement["secondNum"] &&
@@ -438,7 +439,70 @@ function clearInputScreen() {
   }
 }
 
+document.addEventListener("keydown", (e) => {
+  let mathElementKey = e.key;
+  let mathElementClassName = e.target.getAttribute("class");
+  let splitDigit = "0123456789.".split("");
+  let splitOperators = "+-*/".split("");
+
+  let inpValue = +inp.value;
+    // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
+   if (storeMathElement["operator"] && splitDigit.includes(mathElementKey)) {
+     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
+     if (!storeMathElement["secondNum"]) {
+       inp.value = "";
+       storeNumPeriod.splice(0);
+     }
+
+     storeNumPeriod.push(mathElementKey);
+     filterPeriodFunc();
+
+     //Append 0 before a period
+     if (filterPeriod[0] === ".") {
+       filterPeriod.splice(0, 0, "0");
+     }
+
+     inp.value = filterPeriod.join("");
+
+     //Add the secondNum if the operator exist in the storeMathElement object
+     storeMathElement["secondNum"] = inp.value;
+   }
+   else if (splitDigit.includes(mathElementKey)) {
+     //Stops the summarize value to be appended to a number
+     if (storeMathElement.stop) {
+       if (splitDigit.includes(mathElementKey)) {
+         storeNumPeriod.splice(0);
+         inp.value = "";
+         storeMathElement.stop = false;
+       }
+     }
+
+     storeNumPeriod.push(mathElementKey);
+
+     //Ensures the calculator does not accept more than one zero when starting a digit.
+     filterZeroFunc();
+
+     //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
+     filterPeriodFunc();
+
+     //Append 0 before a period
+     if (filterPeriod[0] === ".") {
+       filterPeriod.splice(0, 0, "0");
+     }
+
+     inp.value = filterPeriod.join("");
+     // Add the firstNum
+     storeMathElement["firstNum"] = inp.value;
+   } else if (
+     storeMathElement["firstNum"] &&
+     splitOperators.includes(mathElementKey)
+   ) {
+     //Add the operator if the firstNum exist in the storeMathElement object
+     storeMathElement["operator"] = mathElementKey;
+   } 
+ 
+
+});
+
 //View how the code is executed
 console.log(storeMathElement);
-console.log(storeNumPeriod);
-console.log(filterPeriod);
