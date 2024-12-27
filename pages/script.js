@@ -100,6 +100,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     }
 
     storeNumPeriod.push(mathElement);
+    filterZeroFunc();
     filterPeriodFunc();
 
     //Append 0 before a period
@@ -111,7 +112,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
 
     //Add the secondNum if the operator exist in the storeMathElement object
     storeMathElement["secondNum"] = inp.value;
-  } 
+  }
   //Accepts only digit
   else if (
     (mathElement === "%" &&
@@ -162,7 +163,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
     // Add the firstNum
     storeMathElement["firstNum"] = inp.value;
   }
- 
+
   //Allows operator to provide the evaluation of the previous expression
   else if (
     storeMathElement["firstNum"] &&
@@ -177,16 +178,23 @@ digitOperatorContainer.addEventListener("click", (e) => {
     );
     storeMathElement["operator"] = mathElement;
   } else if (
-    mathElementClassName === "backspace" &&
-    storeMathElement["firstNum"] && !storeMathElement["secondNum"] &&
-    !storeMathElement["operator"] ||
+    (mathElementClassName === "backspace" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElementClassName === "backspace" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
+  ) {
+    firstNumBackspaceFunc();
+  } else if (
     mathElementClassName === "backspace" &&
     storeMathElement["firstNum"] &&
-    !storeMathElement["secondNum"] && storeMathElement["operator"]) {
-      firstNumBackspaceFunc()
-  }
-  else if(mathElementClassName === "backspace" && storeMathElement["firstNum"]&& storeMathElement["operator"] && storeMathElement["secondNum"]){
-    secondNumBackspaceFunc()
+    storeMathElement["operator"] &&
+    storeMathElement["secondNum"]
+  ) {
+    secondNumBackspaceFunc();
   }
   //Checks if the firstNum exist in the storeMathElement object before the operator is been added to the storeMathElement object.
   else if (
@@ -195,8 +203,8 @@ digitOperatorContainer.addEventListener("click", (e) => {
   ) {
     //Add the operator if the firstNum exist in the storeMathElement object
     storeMathElement["operator"] = mathElement;
-  } 
-    //Passes the values inside the storeMathElement as argument to operate().
+  }
+  //Passes the values inside the storeMathElement as argument to operate().
   else if (mathElement === "=" && storeMathElement["secondNum"]) {
     liveDisplayFunc();
     operate(
@@ -212,14 +220,14 @@ digitOperatorContainer.addEventListener("click", (e) => {
 });
 
 resetButton.addEventListener("click", () => {
-  resetButtonFunc()
+  resetButtonFunc();
 });
 
-function resetButtonFunc(){
+function resetButtonFunc() {
   inp.value = "";
   liveDisplay.textContent = "";
   storeNumPeriod.splice(0);
-  
+
   for (let key in storeMathElement) {
     if (key === "stop") {
       storeMathElement[key] = false;
@@ -227,7 +235,6 @@ function resetButtonFunc(){
       delete storeMathElement[key];
     }
   }
-
 }
 function operate(operator, num1, num2) {
   if (operator === "+") inp.value = add(num1, num2);
@@ -396,15 +403,14 @@ function filterZeroFunc() {
   }
 }
 
-
 function firstNumBackspaceFunc() {
   storeNumPeriod.splice(0);
   let extractInp = inp.value.split("");
-  
-  extractInp.splice(extractInp.length-1, 1)
+
+  extractInp.splice(extractInp.length - 1, 1);
 
   //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i <extractInp.length; i++) {
+  for (let i = 0; i < extractInp.length; i++) {
     storeNumPeriod.push(extractInp[i]);
   }
   //Update the storeNumPeriod to store the current value display in the input screen
@@ -418,11 +424,11 @@ function firstNumBackspaceFunc() {
 function secondNumBackspaceFunc() {
   storeNumPeriod.splice(0);
   let extractInp = inp.value.split("");
-  
-  extractInp.splice(extractInp.length-1, 1)
+
+  extractInp.splice(extractInp.length - 1, 1);
 
   //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i <extractInp.length; i++) {
+  for (let i = 0; i < extractInp.length; i++) {
     storeNumPeriod.push(extractInp[i]);
   }
   //Update the storeNumPeriod to store the current value display in the input screen
@@ -432,7 +438,6 @@ function secondNumBackspaceFunc() {
   inp.value = filterPeriod.join("");
   storeMathElement["secondNum"] = inp.value;
 }
-
 
 function clearInputScreen() {
   storeNumPeriod.splice(0);
@@ -453,117 +458,152 @@ document.addEventListener("keydown", (e) => {
   let splitOperators = "+-*/".split("");
 
   let inpValue = +inp.value;
-    // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
-   if (storeMathElement["operator"] && splitDigit.includes(mathElementKey)) {
-     //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
-     if (!storeMathElement["secondNum"]) {
-       inp.value = "";
-       storeNumPeriod.splice(0);
-     }
+  if (
+    (mathElementKey === "t" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElementKey === "t" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
+  ) {
+    if (inpValue > 0) {
+      //Append "-" to the number (firstNum)
+      firstNumPositiveToNegative();
+    } else if (inpValue < 0) {
+      //Append "+" to the number (firstNum)
+      firstNumNegativeToPositive();
+    }
+  } else if (
+    mathElementKey === "t" &&
+    storeMathElement["firstNum"] &&
+    storeMathElement["secondNum"] &&
+    storeMathElement["operator"]
+  ) {
+    if (inpValue > 0) {
+      //Append "-" to the number (secondNum)
+      secondNumPositiveToNegative();
+    } else if (inpValue < 0) {
+      //Append "+" to the number (secondNum)
+      secondNumNegativeToPositive();
+    }
+  }
+  // Checks if operator exist in the storeMathElement object before adding the secondNum in the storeMathElement oject && accepts only digits.
+  else if (
+    storeMathElement["operator"] &&
+    splitDigit.includes(mathElementKey)
+  ) {
+    //Checks if the secondNum key exists, if it does not exist it clears the inp screen for the secondNum value to be entered..
+    if (!storeMathElement["secondNum"]) {
+      inp.value = "";
+      storeNumPeriod.splice(0);
+    }
 
-     storeNumPeriod.push(mathElementKey);
-     filterPeriodFunc();
+    storeNumPeriod.push(mathElementKey);
+    filterZeroFunc();
+    filterPeriodFunc();
 
-     //Append 0 before a period
-     if (filterPeriod[0] === ".") {
-       filterPeriod.splice(0, 0, "0");
-     }
+    //Append 0 before a period
+    if (filterPeriod[0] === ".") {
+      filterPeriod.splice(0, 0, "0");
+    }
 
-     inp.value = filterPeriod.join("");
+    inp.value = filterPeriod.join("");
 
-     //Add the secondNum if the operator exist in the storeMathElement object
-     storeMathElement["secondNum"] = inp.value;
-   } else if (splitDigit.includes(mathElementKey)) {
-     //Stops the summarize value to be appended to a number
-     if (storeMathElement.stop) {
-       if (splitDigit.includes(mathElementKey)) {
-         storeNumPeriod.splice(0);
-         inp.value = "";
-         storeMathElement.stop = false;
-       }
-     }
+    //Add the secondNum if the operator exist in the storeMathElement object
+    storeMathElement["secondNum"] = inp.value;
+  } else if (splitDigit.includes(mathElementKey)) {
+    //Stops the summarize value to be appended to a number
+    if (storeMathElement.stop) {
+      if (splitDigit.includes(mathElementKey)) {
+        storeNumPeriod.splice(0);
+        inp.value = "";
+        storeMathElement.stop = false;
+      }
+    }
 
-     storeNumPeriod.push(mathElementKey);
+    storeNumPeriod.push(mathElementKey);
 
-     //Ensures the calculator does not accept more than one zero when starting a digit.
-     filterZeroFunc();
+    //Ensures the calculator does not accept more than one zero when starting a digit.
+    filterZeroFunc();
 
-     //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
-     filterPeriodFunc();
+    //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
+    filterPeriodFunc();
 
-     //Append 0 before a period
-     if (filterPeriod[0] === ".") {
-       filterPeriod.splice(0, 0, "0");
-     }
+    //Append 0 before a period
+    if (filterPeriod[0] === ".") {
+      filterPeriod.splice(0, 0, "0");
+    }
 
-     inp.value = filterPeriod.join("");
-     // Add the firstNum
-     storeMathElement["firstNum"] = inp.value;
-   } else if (
-     storeMathElement["firstNum"] &&
-     splitOperators.includes(mathElementKey)
-   ) {
-     //Add the operator if the firstNum exist in the storeMathElement object
-     storeMathElement["operator"] = mathElementKey;
-   }
-   //Passes the values inside the storeMathElement as argument to operate().
-   else if (
-     mathElementKey === "=" ||
-     (mathElementKey === "Enter" && storeMathElement["secondNum"])
-   ) {
-     liveDisplayFunc();
-     operate(
-       storeMathElement.operator,
-       +storeMathElement.firstNum,
-       +storeMathElement.secondNum
-     );
-   }
-   //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object
-   else if (mathElementKey === " ") {
-     clearInputScreen();
-   } else if (mathElementKey === "Escape") {
-     resetButtonFunc();
-   } else if (
-     (mathElementKey === "%" &&
-       storeMathElement["firstNum"] &&
-       !storeMathElement["secondNum"] &&
-       !storeMathElement["operator"]) ||
-     (mathElementKey === "%" &&
-       storeMathElement["firstNum"] &&
-       !storeMathElement["secondNum"] &&
-       storeMathElement["operator"])
-   ) {
-     //Convert firstNum to percentage
-     firstNumConvertToPercentage();
-     liveDisplay.textContent = inp.value;
-   } else if (
-     mathElementKey === "%" &&
-     storeMathElement["firstNum"] &&
-     storeMathElement["secondNum"] &&
-     storeMathElement["operator"]
-   ) {
-     //Convert secondNum to percentage
-     secondNumConvertToPercentage();
-     liveDisplay.textContent = inp.value;
-   } else if (
-     (mathElementKey === "Backspace" &&
-       storeMathElement["firstNum"] &&
-       !storeMathElement["secondNum"] &&
-       !storeMathElement["operator"]) ||
-     (mathElementKey === "backspace" &&
-       storeMathElement["firstNum"] &&
-       !storeMathElement["secondNum"] &&
-       storeMathElement["operator"])
-   ) {
-     firstNumBackspaceFunc();
-   } else if (
-     mathElementKey === "Backspace" &&
-     storeMathElement["firstNum"] &&
-     storeMathElement["operator"] &&
-     storeMathElement["secondNum"]
-   ) {
-     secondNumBackspaceFunc();
-   }
+    inp.value = filterPeriod.join("");
+    // Add the firstNum
+    storeMathElement["firstNum"] = inp.value;
+  } else if (
+    storeMathElement["firstNum"] &&
+    splitOperators.includes(mathElementKey)
+  ) {
+    //Add the operator if the firstNum exist in the storeMathElement object
+    storeMathElement["operator"] = mathElementKey;
+  }
+  //Passes the values inside the storeMathElement as argument to operate().
+  else if (
+    mathElementKey === "=" ||
+    (mathElementKey === "Enter" && storeMathElement["secondNum"])
+  ) {
+    liveDisplayFunc();
+    operate(
+      storeMathElement.operator,
+      +storeMathElement.firstNum,
+      +storeMathElement.secondNum
+    );
+  }
+  //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object
+  else if (mathElementKey === " ") {
+    clearInputScreen();
+  } else if (mathElementKey === "Escape") {
+    resetButtonFunc();
+  } else if (
+    (mathElementKey === "%" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElementKey === "%" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
+  ) {
+    //Convert firstNum to percentage
+    firstNumConvertToPercentage();
+    liveDisplay.textContent = inp.value;
+  } else if (
+    mathElementKey === "%" &&
+    storeMathElement["firstNum"] &&
+    storeMathElement["secondNum"] &&
+    storeMathElement["operator"]
+  ) {
+    //Convert secondNum to percentage
+    secondNumConvertToPercentage();
+    liveDisplay.textContent = inp.value;
+  } else if (
+    (mathElementKey === "Backspace" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      !storeMathElement["operator"]) ||
+    (mathElementKey === "backspace" &&
+      storeMathElement["firstNum"] &&
+      !storeMathElement["secondNum"] &&
+      storeMathElement["operator"])
+  ) {
+    firstNumBackspaceFunc();
+  } else if (
+    mathElementKey === "Backspace" &&
+    storeMathElement["firstNum"] &&
+    storeMathElement["operator"] &&
+    storeMathElement["secondNum"]
+  ) {
+    secondNumBackspaceFunc();
+  }
 });
 
 //View how the code is executed
