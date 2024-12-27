@@ -41,8 +41,15 @@ body {
   font-family: Tahoma, sans-serif;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.manaul-container{
+  background: var(--cl-light-grey);
+}
+.manaul-container ul li{
+  list-style: none;
 }
 .container {
   display: flex;
@@ -56,7 +63,7 @@ body {
   color: var(--cl-dark-brown);
 }
 .info {
-  color: var(--cl-white);
+  color: var(--cl-dark-green);
 }
 h5 {
   padding: var(--pd-small);
