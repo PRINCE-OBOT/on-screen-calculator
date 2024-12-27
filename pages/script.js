@@ -287,10 +287,6 @@ document.addEventListener("keydown", (e) => {
       +storeMathElement.firstNum,
       +storeMathElement.secondNum
     );
-  }
-  //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object
-  else if (mathElementKey === " ") {
-    clearInputScreen();
   } else if (mathElementKey === "Escape") {
     resetButtonFunc();
   } else if (
@@ -320,7 +316,7 @@ document.addEventListener("keydown", (e) => {
       storeMathElement["firstNum"] &&
       !storeMathElement["secondNum"] &&
       !storeMathElement["operator"]) ||
-    (mathElementKey === "backspace" &&
+    (mathElementKey === "Backspace" &&
       storeMathElement["firstNum"] &&
       !storeMathElement["secondNum"] &&
       storeMathElement["operator"])
