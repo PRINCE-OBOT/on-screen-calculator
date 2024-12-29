@@ -8,13 +8,8 @@
 
 :root {
   --cl-medium-dark-brown: rgb(176, 88, 5);
-  --cl-linear: linear-gradient(
-    to left,
-    var(--cl-light-grey),
-    var(--cl-very-dark-brown),
-    var(--cl-medium-dark-brown) 0.7rem
-  );
-  --cl-very-dark-brown: rgb(114, 57, 3);
+  --cl-linear: linear-gradient(rgb(124, 97, 51), rgb(118, 102, 58), rgb(40, 32, 5));
+  --cl-very-dark-brown: rgb(47, 60, 117);
   --cl-light-grey: rgb(217, 218, 217);
   --cl-white: rgb(231, 237, 204);
   --cl-dark-green: rgb(19, 85, 20);
@@ -59,12 +54,14 @@ body {
   display: flex;
   flex-direction: column;
   max-width: var(--mx-width);
-  border: 0.3rem solid var(--cl-very-dark-brown);
+  outline: 0.3rem solid rgb(44, 30, 1);
+  outline-offset: .1rem;
   border-radius: 0.5rem;
   text-align: center;
-  gap: 0.3rem;
-  background: var(--cl-very-dark-brown);
+  gap: 0.9rem;
+  background: var(--cl-linear);
   color: var(--cl-dark-brown);
+  padding: .2rem;
 }
 .info {
   color: var(--cl-dark-green);
@@ -80,6 +77,8 @@ h5 {
   background: var(--cl-medium-red);
   color: var(--cl-light-green);
   border-radius: 0.2rem;
+  transform: rotate(30deg);
+  display: inline-block;
 }
 .liveDisplayCon {
   position: relative;
@@ -88,7 +87,7 @@ h5 {
   min-width: 4.5rem;
   height: 2rem;
   font-weight: var(--fw-bold);
-  color: var(--cl-very-dark-brown);
+  color: rgb(47, 46, 40);
   background: var(--cl-white);
   box-shadow: var(--bx-shadow-inset);
   font-size: var(--fs-small);
@@ -118,11 +117,13 @@ h5 {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
+  justify-content: space-between;
+  gap: .5rem;
 }
 .digit-operator-container div {
-  width: calc(100% / 4);
+  width: calc(100% / 4 - .5rem);
   height: 4rem;
-  background: var(--cl-medium-dark-brown);
+  background: none;
   box-shadow: var(--bx-shadow-normal);
   border-radius: var(--br-small);
   display: flex;
