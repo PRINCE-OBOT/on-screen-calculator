@@ -7,6 +7,7 @@
 }
 
 :root {
+  /* colors */
   --cl-medium-dark-brown: rgb(176, 88, 5);
   --cl-linear: linear-gradient(rgb(124, 97, 51), rgb(118, 102, 58), rgb(40, 32, 5));
   --cl-very-dark-brown: rgb(47, 60, 117);
@@ -17,19 +18,19 @@
   --cl-medium-red: rgb(230, 12, 2);
   --cl-medium-green: rgb(2, 153, 7);
   --cl-light-green: rgb(143, 250, 163);
-
+  /* font-weight*/
   --fw-bold: 900;
-
+  /* font-size */
   --fs-big: 2.5rem;
   --fs-small: 1.2rem;
-
+  /*max-width */
   --mx-width: 16rem;
-
+  /*Border-Radius*/
   --br-small: 0.2rem;
-
+  /*Box-shadow*/
   --bx-shadow-inset: inset 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.8);
   --bx-shadow-normal: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.9);
-
+  /*Padding*/
   --pd-small: 0.6rem;
 }
 body {

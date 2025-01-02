@@ -181,7 +181,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keyup", (e) => {
   let mathElementKey = e.key;
   let mathElementClassName = e.target.getAttribute("class");
   let splitDigit = "0123456789.".split("");
