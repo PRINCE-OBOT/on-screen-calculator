@@ -183,7 +183,6 @@ digitOperatorContainer.addEventListener("click", (e) => {
 
 document.addEventListener("keyup", (e) => {
   let mathElementKey = e.key;
-  let mathElementClassName = e.target.getAttribute("class");
   let splitDigit = "0123456789.".split("");
   let splitOperators = "+-*/".split("");
 
@@ -329,7 +328,10 @@ document.addEventListener("keyup", (e) => {
     storeMathElement["secondNum"]
   ) {
     secondNumBackspaceFunc();
+  } else if (mathElementKey === " ") {
+    clearInputScreen();
   }
+
 });
 
 resetButton.addEventListener("click", () => {
