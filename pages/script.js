@@ -21,15 +21,8 @@ digitOperatorContainer.addEventListener("click", (e) => {
   let splitOperators = "+-*/".split("");
 
   let inpValue = +inp.value;
-  if (
-    (mathElement === "+/-" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElement === "+/-" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+  if ((mathElement === "+/-" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]) ||
+    (mathElement === "+/-" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && storeMathElement["operator"])
   ) {
     if (inpValue > 0) {
       //Append "-" to the number (firstNum)
@@ -38,11 +31,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
       //Append "+" to the number (firstNum)
       firstNumNegativeToPositive();
     }
-  } else if (
-    mathElement === "+/-" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["secondNum"] &&
-    storeMathElement["operator"]
+  } else if (mathElement === "+/-" && storeMathElement["firstNum"] && storeMathElement["secondNum"] && storeMathElement["operator"]
   ) {
     if (inpValue > 0) {
       //Append "-" to the number (secondNum)
@@ -77,23 +66,13 @@ digitOperatorContainer.addEventListener("click", (e) => {
   }
   //Accepts only digit
   else if (
-    (mathElement === "%" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElement === "%" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+    (mathElement === "%" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]) ||
+    (mathElement === "%" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] &&storeMathElement["operator"])
   ) {
     //Convert firstNum to percentage
     firstNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
-  } else if (
-    mathElement === "%" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["secondNum"] &&
-    storeMathElement["operator"]
+  } else if (mathElement === "%" && storeMathElement["firstNum"] && storeMathElement["secondNum"] && storeMathElement["operator"]
   ) {
     //Convert secondNum to percentage
     secondNumConvertToPercentage();
@@ -109,52 +88,31 @@ digitOperatorContainer.addEventListener("click", (e) => {
     }
 
     storeNumPeriod.push(mathElement);
-
     //Ensures the calculator does not accept more than one zero when starting a digit.
     filterZeroFunc();
-
     //Checks if any digit or period is clicked, then pushes it to storeNumPeriod array, and later filtered by filterPeriod array to select numbers and the first period in storeNumPeriod array.
     filterPeriodFunc();
-
     //Append 0 before a period
     if (filterPeriod[0] === ".") {
       filterPeriod.splice(0, 0, "0");
     }
-
     inp.value = filterPeriod.join("");
     // Add the firstNum
     storeMathElement["firstNum"] = inp.value;
   }
 
   //Allows operator to provide the evaluation of the previous expression
-  else if (
-    storeMathElement["firstNum"] &&
-    storeMathElement["secondNum"] &&
-    splitOperators.includes(mathElement)
+  else if (storeMathElement["firstNum"] && storeMathElement["secondNum"] && splitOperators.includes(mathElement)
   ) {
     liveDisplayFunc();
-    operate(
-      storeMathElement.operator,
-      +storeMathElement.firstNum,
-      +storeMathElement.secondNum
+    operate(storeMathElement.operator, +storeMathElement.firstNum, +storeMathElement.secondNum
     );
     storeMathElement["operator"] = mathElement;
-  } else if (
-    (mathElementClassName === "backspace" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElementClassName === "backspace" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+  } else if ((mathElementClassName === "backspace" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] &&!storeMathElement["operator"]) ||
+    (mathElementClassName === "backspace" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && storeMathElement["operator"])
   ) {
     firstNumBackspaceFunc();
-  } else if (
-    mathElementClassName === "backspace" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["operator"] &&
-    storeMathElement["secondNum"]
+  } else if (mathElementClassName === "backspace" && storeMathElement["firstNum"] && storeMathElement["operator"] && storeMathElement["secondNum"]
   ) {
     secondNumBackspaceFunc();
   }
@@ -169,10 +127,7 @@ digitOperatorContainer.addEventListener("click", (e) => {
   //Passes the values inside the storeMathElement as argument to operate().
   else if (mathElement === "=" && storeMathElement["secondNum"]) {
     liveDisplayFunc();
-    operate(
-      storeMathElement.operator,
-      +storeMathElement.firstNum,
-      +storeMathElement.secondNum
+    operate(storeMathElement.operator, +storeMathElement.firstNum, +storeMathElement.secondNum
     );
   }
   //Clears the input screen, also clear the storeMathElement object, and ensure that stop key remains in the storeMathElement object
@@ -188,14 +143,8 @@ document.addEventListener("keyup", (e) => {
 
   let inpValue = +inp.value;
   if (
-    (mathElementKey === "t" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElementKey === "t" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+    (mathElementKey === "t" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && !storeMathElement["operator"]) ||
+    (mathElementKey === "t" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] && storeMathElement["operator"])
   ) {
     if (inpValue > 0) {
       //Append "-" to the number (firstNum)
@@ -204,11 +153,7 @@ document.addEventListener("keyup", (e) => {
       //Append "+" to the number (firstNum)
       firstNumNegativeToPositive();
     }
-  } else if (
-    mathElementKey === "t" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["secondNum"] &&
-    storeMathElement["operator"]
+  } else if (mathElementKey === "t" && storeMathElement["firstNum"] && storeMathElement["secondNum"] &&storeMathElement["operator"]
   ) {
     if (inpValue > 0) {
       //Append "-" to the number (secondNum)
@@ -281,108 +226,50 @@ document.addEventListener("keyup", (e) => {
     (mathElementKey === "Enter" && storeMathElement["secondNum"])
   ) {
     liveDisplayFunc();
-    operate(
-      storeMathElement.operator,
-      +storeMathElement.firstNum,
-      +storeMathElement.secondNum
+    operate(storeMathElement.operator, +storeMathElement.firstNum,+storeMathElement.secondNum
     );
   } else if (mathElementKey === "Escape") {
     resetButtonFunc();
   } else if (
-    (mathElementKey === "%" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElementKey === "%" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+    (mathElementKey === "%" &&storeMathElement["firstNum"] &&!storeMathElement["secondNum"] &&!storeMathElement["operator"]) ||
+    (mathElementKey === "%" &&storeMathElement["firstNum"] &&!storeMathElement["secondNum"] &&storeMathElement["operator"])
   ) {
     //Convert firstNum to percentage
     firstNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
   } else if (
-    mathElementKey === "%" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["secondNum"] &&
-    storeMathElement["operator"]
+    mathElementKey === "%" && storeMathElement["firstNum"] && storeMathElement["secondNum"] && storeMathElement["operator"]
   ) {
     //Convert secondNum to percentage
     secondNumConvertToPercentage();
     liveDisplay.textContent = inp.value;
   } else if (
-    (mathElementKey === "Backspace" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      !storeMathElement["operator"]) ||
-    (mathElementKey === "Backspace" &&
-      storeMathElement["firstNum"] &&
-      !storeMathElement["secondNum"] &&
-      storeMathElement["operator"])
+    (mathElementKey === "Backspace" && storeMathElement["firstNum"] && !storeMathElement["secondNum"] &&!storeMathElement["operator"]) ||
+    (mathElementKey === "Backspace" &&storeMathElement["firstNum"] &&!storeMathElement["secondNum"] &&storeMathElement["operator"])
   ) {
     firstNumBackspaceFunc();
-  } else if (
-    mathElementKey === "Backspace" &&
-    storeMathElement["firstNum"] &&
-    storeMathElement["operator"] &&
-    storeMathElement["secondNum"]
+  } else if (mathElementKey === "Backspace" &&storeMathElement["firstNum"] &&storeMathElement["operator"] &&storeMathElement["secondNum"]
   ) {
     secondNumBackspaceFunc();
   } else if (mathElementKey === " ") {
     clearInputScreen();
   }
-
 });
 
 resetButton.addEventListener("click", () => {
   resetButtonFunc();
 });
 
-//functions
-function add(num1, num2) {
-  let result = num1 + num2;
-  if (!Number.isInteger(result)) {
-    return result.toFixed(2);
-  } else {
-    return result;
-  }
-}
-
-function sub(num1, num2) {
-  let result = num1 - num2;
-  if (!Number.isInteger(result)) {
-    return result.toFixed(2);
-  } else {
-    return result;
-  }
-}
-
-function mul(num1, num2) {
-  let result = num1 * num2;
-  if (!Number.isInteger(result)) {
-    return result.toFixed(2);
-  } else {
-    return result;
-  }
-}
-
-function div(num1, num2) {
-  let result = num1 / num2;
-  if (result === Infinity) {
-    return `Can't divide by 0`;
-  } else if (!Number.isInteger(result)) {
-    return result.toFixed(2);
-  } else {
-    return result;
-  }
-}
-
 function operate(operator, num1, num2) {
-  if (operator === "+") inp.value = add(num1, num2);
-  else if (operator === "-") inp.value = sub(num1, num2);
-  else if (operator === "*") inp.value = mul(num1, num2);
-  else if (operator === "/") inp.value = div(num1, num2);
-
+  const expression = {
+    "+": num1 + num2,
+    "-": num1 - num2,
+    "*": num1 * num2,
+    "/": num2 ? num1 / num2 : "Can't divide by 0",
+  };
+  const roundResult = `${expression[operator]}`.split("")
+  if(roundResult.includes('.') && roundResult.lastIndexOf('.' > 2)) inp.value = expression[operator].toFixed(3)
+  else {inp.value = expression[operator]}
   updateFirstNumFunc();
 }
 
@@ -417,98 +304,62 @@ function updateFirstNumFunc() {
     }
   }
 }
-
-function firstNumPositiveToNegative() {
-  storeNumPeriod.splice(0);
-
-  //Update the storeNumPeriod to store the current value display in the input screen
-  let tempHoldInpValue = `-${inp.value}`.split("");
-
-  for (let i = 0; i < tempHoldInpValue.length; i++) {
-    storeNumPeriod.push(tempHoldInpValue[i]);
-  }
-  filterPeriodFunc();
-
-  //Execute mathElement that meet the filter condition
-  inp.value = filterPeriod.join("");
-  storeMathElement["firstNum"] = inp.value;
-}
-
-function firstNumNegativeToPositive() {
-  let extractInp = inp.value.split("");
-  let extractPositiveInp = extractInp.slice(1).join("");
-
-  //Update the storeNumPeriod to store the current value display in the input screen
-  storeNumPeriod.splice(0);
-
-  let tempHoldInpValue = `${extractPositiveInp}`.split("");
-
-  //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i < tempHoldInpValue.length; i++) {
-    storeNumPeriod.push(tempHoldInpValue[i]);
-  }
-  filterPeriodFunc();
-
-  //Execute mathElement that meet the filter condition
-  inp.value = filterPeriod.join("");
-  storeMathElement["firstNum"] = inp.value;
-}
-
-function secondNumPositiveToNegative() {
-  storeNumPeriod.splice(0);
-
-  let tempHoldInpValue = `-${inp.value}`.split("");
-
-  for (let i = 0; i < tempHoldInpValue.length; i++) {
-    storeNumPeriod.push(tempHoldInpValue[i]);
-  }
-  //Update the storeNumPeriod to store the current value display in the input screen
-  filterPeriodFunc();
-
-  //Execute mathElement that meet the filter condition
-  inp.value = filterPeriod.join("");
-  storeMathElement["secondNum"] = inp.value;
-}
-
-function secondNumNegativeToPositive() {
-  let extractInp = inp.value.split("");
-  let extractPositiveInp = extractInp.slice(1).join("");
-
-  storeNumPeriod.splice(0);
-  let tempHoldInpValue = `${extractPositiveInp}`.split("");
-
-  //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i < tempHoldInpValue.length; i++) {
-    storeNumPeriod.push(tempHoldInpValue[i]);
-  }
-  //Update the storeNumPeriod to store the current value display in the input screen
-  filterPeriodFunc();
-
-  //Execute mathElement that meet the filter condition
-  inp.value = filterPeriod.join("");
-  storeMathElement["secondNum"] = inp.value;
-}
-
 function firstNumConvertToPercentage() {
-  let inpValue = +inp.value;
-  let convertToPercentage = inpValue / 100;
-  storeNumPeriod.splice(0);
-
-  let tempHoldInpValue = `${convertToPercentage}`.split("");
-
-  //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i < tempHoldInpValue.length; i++) {
-    storeNumPeriod.push(tempHoldInpValue[i]);
-  }
-  //Extract the convertToPercentage value
-  filterPeriodFunc();
-  //Display the data on the screen
-  inp.value = filterPeriod.join("");
-  //store the displayed data on the screen in the storeMathElement object
+  convertToPercentage();
   storeMathElement["firstNum"] = inp.value;
 }
 
 function secondNumConvertToPercentage() {
+  convertToPercentage();
+  storeMathElement["secondNum"] = inp.value;
+}
+function firstNumPositiveToNegative() {
+  togglePOsitiveToNegative();
+  storeMathElement["firstNum"] = inp.value;
+}
+
+function firstNumNegativeToPositive() {
+  toggleNegativeToPositive();
+  storeMathElement["firstNum"] = inp.value;
+}
+
+function secondNumPositiveToNegative() {
+  togglePOsitiveToNegative();
+  storeMathElement["secondNum"] = inp.value;
+}
+
+function secondNumNegativeToPositive() {
+  toggleNegativeToPositive();
+  storeMathElement["secondNum"] = inp.value;
+}
+function togglePOsitiveToNegative() {
+  storeNumPeriod.splice(0);
+  //Update the storeNumPeriod to store the current value display in the input screen
+  let tempHoldInpValue = `-${inp.value}`.split("");
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
+  filterPeriodFunc();
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+}
+
+function toggleNegativeToPositive() {
+  let extractInp = inp.value.split("");
+  let extractPositiveInp = extractInp.slice(1).join("");
+  //Update the storeNumPeriod to store the current value display in the input screen
+  storeNumPeriod.splice(0);
+  let tempHoldInpValue = `${extractPositiveInp}`.split("");
+  //Update the storeNumPeriod to store convertToPercentage value
+  for (let i = 0; i < tempHoldInpValue.length; i++) {
+    storeNumPeriod.push(tempHoldInpValue[i]);
+  }
+  filterPeriodFunc();
+  //Execute mathElement that meet the filter condition
+  inp.value = filterPeriod.join("");
+}
+
+function convertToPercentage() {
   let inpValue = +inp.value;
   let convertToPercentage = inpValue / 100;
   storeNumPeriod.splice(0);
@@ -524,7 +375,6 @@ function secondNumConvertToPercentage() {
   //Display the data on the screen
   inp.value = filterPeriod.join("");
   //store the displayed data on the screen in the storeMathElement object
-  storeMathElement["secondNum"] = inp.value;
 }
 
 function filterPeriodFunc() {
@@ -544,39 +394,26 @@ function filterZeroFunc() {
   }
 }
 
-function firstNumBackspaceFunc() {
+function backspace() {
   storeNumPeriod.splice(0);
   let extractInp = inp.value.split("");
-
   extractInp.splice(extractInp.length - 1, 1);
-
   //Update the storeNumPeriod to store convertToPercentage value
   for (let i = 0; i < extractInp.length; i++) {
     storeNumPeriod.push(extractInp[i]);
   }
   //Update the storeNumPeriod to store the current value display in the input screen
   filterPeriodFunc();
-
   //Execute mathElement that meet the filter condition
   inp.value = filterPeriod.join("");
+}
+function firstNumBackspaceFunc() {
+  backspace();
   storeMathElement["firstNum"] = inp.value;
 }
 
 function secondNumBackspaceFunc() {
-  storeNumPeriod.splice(0);
-  let extractInp = inp.value.split("");
-
-  extractInp.splice(extractInp.length - 1, 1);
-
-  //Update the storeNumPeriod to store convertToPercentage value
-  for (let i = 0; i < extractInp.length; i++) {
-    storeNumPeriod.push(extractInp[i]);
-  }
-  //Update the storeNumPeriod to store the current value display in the input screen
-  filterPeriodFunc();
-
-  //Execute mathElement that meet the filter condition
-  inp.value = filterPeriod.join("");
+  backspace();
   storeMathElement["secondNum"] = inp.value;
 }
 
