@@ -268,7 +268,7 @@ function operate(operator, num1, num2) {
     "/": num2 ? num1 / num2 : "Can't divide by 0",
   };
   const roundResult = `${expression[operator]}`.split("")
-  if(roundResult.includes('.') && roundResult.lastIndexOf('.' > 2)) inp.value = expression[operator].toFixed(3)
+  if(roundResult.includes('.') && roundResult.lastIndexOf('.') > 2) inp.value = expression[operator].toFixed(3)
   else {inp.value = expression[operator]}
   updateFirstNumFunc();
 }
